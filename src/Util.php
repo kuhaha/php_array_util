@@ -1,5 +1,5 @@
 <?php
-namespace ksu\models;
+namespace ksu;
 
 class Util {
     public static function jpdate($date, $withtime=false, $withyear=true){
@@ -15,62 +15,52 @@ class Util {
         return $_date->format('n月d日(') . $wdays[$w]. ')' . $time;
     }
 
-        /** transform a row list to a KVP list: Key-Value Pair */
-        public static function toKVP($data, $key_field, $value_field)
-        {
-            $options = [];
-            foreach($data as $row){
-                $key = $row[$key_field];
-                $value = $row[$value_field];
-                $options[$key] = $value;
-            }
-            return $options;
+    /** transform a row list to a KVP list: Key-Value Pair */
+    public static function toKVP($data, $key_field, $value_field)
+    {
+        $options = [];
+        foreach($data as $row){
+            $key = $row[$key_field];
+            $value = $row[$value_field];
+            $options[$key] = $value;
         }
+        return $options;
+    }
         
     public static function unifom_rand($items, $n=1)
     {
-        $indexes = array_rand($items, $n);
-        return self::array_slice_by_index($items, $indexes);
+        $rand_keys = array_rand($items, $n);
+        return self::slice_by_key($items, $rand_keys);
     }
 
-    public static function array_slice_by_index($items, $indexes)
+    public static function slice_by_key($items, $keys)
     {
         $sliced = [];
-        if (is_scalar($indexes)) {
-            $indexes = [$indexes];
-        }
-        foreach($indexes as $i){
-            $sliced[] = $items[$i];
+        foreach(is_array($keys)?$keys:[$keys] as $k){
+            $sliced[] = $items[$k];
         }
         return $sliced;
     }
 
-    /** prob_rand() : returns n elements from an array selected randpmly at unform
-     * Example: prob_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
+    /** weighted_rand() : returns n elements from an array selected randpmly at unform
+     * Example: weighted_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
      */
-    public static function prob_rand($prob_items, $n=1) 
+    public static function weighted_rand($prob_items, $n=1) 
     {        
-        $keys = array_keys($prob_items);
-        $n_item = count($keys); 
+        $n_item = count($prob_items); 
         if ($n < 1 or $n > $n_item){
             return null;
         }
-        // Transfer value => probility
-        $_values = array_values($prob_items);  
-        $_total = array_sum($_values);    
-        $_prob = array_map(fn($v):float=>$v/$_total, $_values);
-        $new_items = array_combine($keys, $_prob);  // print_r($new_items);
-        
-        // Generate combined keys of size $n, e.g.,
-        // ['J','Q', 'K', 'A'] => [['J','Q'],['Q','K'],['K','A']]
-        $comb_keys = self::combination($keys, $n);    // print_r($comb_keys);
+        $keys = array_keys($prob_items);
+        $total = array_sum($prob_items);    
+        $new_items = array_map(fn($v):float=>$v/$total, $prob_items);        
+        $comb_keys = self::combination($keys, $n);  
         $comb_values = [];
-        foreach ($comb_keys as $i=>$key){
-            $comb_prob = array_map(fn($a):float=>$new_items[$a], $key);
+        foreach ($comb_keys as $i=>$comb_key){
+            $comb_prob = array_map(fn($a):float=>$new_items[$a], $comb_key);
             $comb_values[$i] = array_product( $comb_prob);
-        }  // print_r($comb_values);
+        } 
         
-        // Randomly choose one combined key with combined probability 
         $total = array_sum($comb_values);
         $stop_at = rand(0, 100); 
         $curr_prob = 0;         

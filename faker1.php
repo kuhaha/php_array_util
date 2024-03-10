@@ -3,10 +3,12 @@
 declare(strict_types=1);
 
 require_once 'vendor/autoload.php';
+use Faker\Factory;
 
 header("Content-type: text/plain; charset=UTF-8");
 // use the factory to create a Faker\Generator instance
-$faker = Faker\Factory::create('ja_JP');
+$faker = Factory::create('ja_JP');
+
 // generate data by calling methods
 foreach(range(0,9) as $i){
     echo $i*2+1, ' ', $faker->lastName(), $faker->firstNameMale(), $faker->firstKanaNameMale(),' M男性', PHP_EOL;

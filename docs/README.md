@@ -4,11 +4,10 @@
 - [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
 
 # Interface
-- `faker_depend()`
-  - *conditional-faker*: `$sex=='M'? $faker->firstNameMale : $faker->firstNameFemale` 
-  - *functional-faker* : `$faker->firstName($sex)`
 - `faker_array()`
   `[$col_1, $col_2, $col_3,...,$col_n]`
+  - *conditional-faker*: `$sex=='M'? $faker->firstNameMale : $faker->firstNameFemale` 
+  - *functional-faker* : `$faker->firstName($sex)`
 - `faker_table()`
 - `weighted_rand()`
 - `array_rand()`
