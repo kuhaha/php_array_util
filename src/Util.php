@@ -1,5 +1,5 @@
 <?php
-namespace aic\models;
+namespace ksu\models;
 
 class Util {
     public static function jpdate($date, $withtime=false, $withyear=true){

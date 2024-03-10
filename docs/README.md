@@ -1,9 +1,16 @@
 #referecens 
 - [Nette Utility Classes](https://github.com/nette/utils)
--
+- [ReverseRegex - Use Regular Expressions to generate text strings ](https://github.com/icomefromthenet/ReverseRegex)
+- [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
 
 # Interface
-- `wighted_rand()`
+- `faker_depend()`
+  - *conditional-faker*: `$sex=='M'? $faker->firstNameMale : $faker->firstNameFemale` 
+  - *functional-faker* : `$faker->firstName($sex)`
+- `faker_array()`
+  `[$col_1, $col_2, $col_3,...,$col_n]`
+- `faker_table()`
+- `weighted_rand()`
 - `array_rand()`
 - `set_eq`
 - `seq_eq`
@@ -51,23 +58,23 @@
 - `array_udiff`: データの比較にコールバック関数を用いて配列の差を計算する
 
 ```
-array_intersect             use Value, not callback
-array_uintersect            use Value, callback receives Value
-array_intersect_key         use Key, not callback
-array_intersect_ukey        use Key, callback receives Key
-array_intersect_assoc       use Both, not callback
-array_intersect_uassoc      use Both, callback receives Key ONLY
-array_uintersect_assoc      use Both, callback receives Value ONLY
-array_uintersect_uassoc     use Both, One callback receives the Key, the other receives the Value.
+    array_intersect             use Value, not callback
+    array_uintersect            use Value, callback receives Value
+    array_intersect_key         use Key, not callback
+    array_intersect_ukey        use Key, callback receives Key
+    array_intersect_assoc       use Both, not callback
+    array_intersect_uassoc      use Both, callback receives Key ONLY
+    array_uintersect_assoc      use Both, callback receives Value ONLY
+    array_uintersect_uassoc     use Both, One callback receives the Key, the other receives the Value.
 
-array_diff             use Value, not callback
-array_udiff            use Value, callback receives Value
-array_diff_key         use Key, not callback
-array_diff_ukey        use Key, callback receives Key
-array_diff_assoc       use Both, not callback
-array_diff_uassoc      use Both, callback receives Key ONLY
-array_udiff_assoc      use Both, callback receives Value ONLY
-array_udiff_uassoc     use Both, One callback receives the Key, the other receives the Value.
+    array_diff             use Value, not callback
+    array_udiff            use Value, callback receives Value
+    array_diff_key         use Key, not callback
+    array_diff_ukey        use Key, callback receives Key
+    array_diff_assoc       use Both, not callback
+    array_diff_uassoc      use Both, callback receives Key ONLY
+    array_udiff_assoc      use Both, callback receives Value ONLY
+    array_udiff_uassoc     use Both, One callback receives the Key, the other receives the Value.
 ```
 
 ## generate, extract, transform
@@ -127,11 +134,17 @@ array_udiff_uassoc     use Both, One callback receives the Key, the other receiv
 - `array_reduce`: コールバック関数を繰り返し配列に適用し、配列をひとつの値にまとめる
 
 ## misc
+
 - `array_is_list()`: 指定された配列がリストかどうかをチェックする
 - `is_array()`:  変数が配列かどうかをチェックする
 - `explode()`: 文字列を区切り文字列により分割する
 - `implode()`, `join()`: 配列要素を区切り文字列により連結する
 - `preg_split()`: 正規表現で文字列を分割する
+- `extract`: 配列からシンボルテーブルに変数をインポートする
+- `list`: 配列と同様の形式で、複数の変数への代入を行う
+
+## array to varibles
+
 - `[$a, $b] = [1, 3]`
 - `['name'=>$name, 'age'=>$age] = ['name'='Tom', 'age'=>21, 'tel'=>'123-4567']`
 
