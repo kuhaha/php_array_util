@@ -1,0 +1,27 @@
+{
+    "name": "ksu/php_utils",
+    "description":"Utilities of PHP Array, Random Sampling ",
+    "version": "1.0.0-dev",
+    "type": "project",
+    "time":"2024-3-10",
+    "authors": [
+      {
+        "name": "kuhaha",
+        "email": "kaiser.k.cheng@gmail.com",
+        "role" : "Developer"
+      }
+    ],
+    "support": {
+        "email": "kaiser.k.cheng@gmail.com"
+    },
+    "autoload": {
+        "psr-4": {
+            "ksu\\": "src/"
+        }
+    },
+    "require": {
+      "php": "^8.0",
+      "fakerphp": "^1.23"    
+     }
+  }
+  
