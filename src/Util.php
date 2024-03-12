@@ -15,13 +15,22 @@ class Util {
         return $_date->format('n月d日(') . $wdays[$w]. ')' . $time;
     }
 
-    /** transform a row list to a KVP list: Key-Value Pair */
-    public static function toKVP($data, $key_field, $value_field)
+    public static function slice_by_key($items, $keys)
+    {
+        $sliced = [];
+        foreach(is_array($keys) ? $keys : [$keys] as $k){
+            $sliced[] = $items[$k];
+        }
+        return $sliced;
+    }
+
+    /** transform a row to a Key-Value Pair */
+    public static function associate($data, $key_field, $callback=null)
     {
         $options = [];
         foreach($data as $row){
             $key = $row[$key_field];
-            $value = $row[$value_field];
+            $value = is_callable($callback) ? $callback($data) : $data;
             $options[$key] = $value;
         }
         return $options;
@@ -33,34 +42,23 @@ class Util {
         return self::slice_by_key($items, $rand_keys);
     }
 
-    public static function slice_by_key($items, $keys)
-    {
-        $sliced = [];
-        foreach(is_array($keys)?$keys:[$keys] as $k){
-            $sliced[] = $items[$k];
-        }
-        return $sliced;
-    }
 
     /** weighted_rand() : returns n elements from an array selected randpmly at unform
      * Example: weighted_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
      */
-    public static function weighted_rand($prob_items, $n=1) 
+    public static function weighted_rand(array $prob_items, int $n=1) : ?array 
     {        
         $n_item = count($prob_items); 
         if ($n < 1 or $n > $n_item){
             return null;
         }
-        $keys = array_keys($prob_items);
-        $total = array_sum($prob_items);    
-        $new_items = array_map(fn($v):float=>$v/$total, $prob_items);        
+        $keys = array_keys($prob_items);   
         $comb_keys = self::combination($keys, $n);  
         $comb_values = [];
         foreach ($comb_keys as $i=>$comb_key){
-            $comb_prob = array_map(fn($a):float=>$new_items[$a], $comb_key);
-            $comb_values[$i] = array_product( $comb_prob);
-        } 
-        
+            $comb_prob = array_map(fn($a):float=>$prob_items[$a], $comb_key);
+            $comb_values[$i] = array_product($comb_prob);
+        }         
         $total = array_sum($comb_values);
         $stop_at = rand(0, 100); 
         $curr_prob = 0;         
@@ -70,10 +68,10 @@ class Util {
                 return $item;
             }
         }  
-        return null;
+        return [];
     }
 
-    static function combination($items, $n)
+    static function combination(array $items, int $n) : ?array
     {
         $items = array_values(array_unique($items));
         $n_item = count($items); 
@@ -82,19 +80,46 @@ class Util {
         }
         $m = $n_item - $n + 1;
         $matrix = [];
-        foreach (range(0, $n-1) as $i){
+        for($i=0; $i < $n; $i++){
             foreach(array_slice($items, $i, $m) as $j=>$item){
                 $matrix[$i][$j] = $item;
             }
         }
-        // print_r($matrix);
-        
         $result = [];
-        foreach (range(0, $m-1) as $i){
+        for ($i = 0; $i < $m; $i++){
             $result[] = array_column($matrix, $i);
         }        
-        // print_r($result);
         return $result;
-
+    }
+    static function permutation(array $items, int $n) : ?array
+    {
+        $items = array_values(array_unique($items));
+        $n_item = count($items); 
+        if ($n < 1 or $n > $n_item){
+            return null;
+        }
+        $result = [];
+        if($n == 1){
+            foreach($items as $item){
+                $result[] = [$item];
+            }
+            return $result;
+        }
+    
+        if($n > 1){
+            foreach($items as $key => $item){
+                // $item を除いた配列を作成
+                $newArr = array_filter($items, function($k) use($key) {
+                    return $k !== $key;
+                }, ARRAY_FILTER_USE_KEY);
+                // 再帰処理 二次元配列が返ってくる
+                $recursion = self::permutation($newArr, $n - 1);
+                foreach($recursion as $one_set){
+                    array_unshift($one_set, $item);
+                    $result[] = $one_set;
+                }
+            }
+        }    
+        return $result;
     }
 }
