@@ -2,17 +2,33 @@
 - [Nette Utility Classes](https://github.com/nette/utils)
 - [ReverseRegex - Use Regular Expressions to generate text strings ](https://github.com/icomefromthenet/ReverseRegex)
 - [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
-
+  ```
+   <<Core>> := <<Extension>> := <<Provider>> := <<Generator>> 
+   BarCode     Address          Address         ChanceGenerator
+   Blood       BarCode          Color           UniqueGenerator
+   ...         ...              ...             ...
+   ```
 # Interface
+- **schema**: column/attribute, row/tuple, table/relation
+- **domain**: int, float, date, datetime, string, set, dict, list, range
+- **formatter**: sprintf, regexp, sql_values
+- **collection**: sequence, random, biased_random
+- **dependency**: functional, multivalued-functional, user-defined 
+
+# Base
+- `generator`, `provider`, `container*`, `extension`
+- `validator`, `exceptor`, `guesser`, `fomatter`
 - `faker_array()`
-  `[$col_1, $col_2, $col_3,...,$col_n]`
-  - *conditional-faker*: `$sex=='M'? $faker->firstNameMale : $faker->firstNameFemale` 
-  - *functional-faker* : `$faker->firstName($sex)`
 - `faker_table()`
 - `weighted_rand()`
 - `array_rand()`
 - `set_eq`
 - `seq_eq`
+
+  
+## References
+1. [PSR-11: Container Interface] (https://www.php-fig.org/psr/psr-11/)
+2. [] ()
 
 # PHP native array functions 
 
