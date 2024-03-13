@@ -10,7 +10,8 @@
    ```
 # Interface
 - **schema**: column/attribute, row/tuple, table/relation
-- **domain**: int, float, date, datetime, string, set, dict, list, range
+- **data type**: int, float, date, datetime, string, set, dict, list, range
+- **domain**: name, tel, address, zipcode, city, email, card_no, ibsn10, color,timeslice,...
 - **formatter**: sprintf, regexp, sql_values
 - **collection**: sequence, random, biased_random
 - **dependency**: functional, multivalued-functional, user-defined 
