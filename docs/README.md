@@ -10,11 +10,35 @@
    ```
 # Interface
 - **schema**: column/attribute, row/tuple, table/relation
-- **data type**: int, float, date, datetime, string, set, dict, list, range
-- **domain**: name, tel, address, zipcode, city, email, card_no, ibsn10, color,timeslice,...
+- **data type**: int, float, date, datetime, char/string, set/enum/dict, list, range
+- **domain**
+  - **general domains**: *sequence, random, biased_random*
+  - **domains with a pattern**: *email, name, address, city, timeslice*
+  - **domains with a precise pattern**: *card_no, isbn10, zipcode, tel, color*
+  - **other domains**
 - **formatter**: sprintf, regexp, sql_values
-- **collection**: sequence, random, biased_random
 - **dependency**: functional, multivalued-functional, user-defined 
+
+CF.
+- A **domain** for database designers is like a typedef for C developers; a domain allows you to define a data type and re-use it across your datamodel. With CREATE DOMAIN you can create a subtype that is based on one existing type (adding constraints to it). Example:
+```
+Create DOMAIN person_name_type AS varchar(40);
+
+CREATE DOMAIN positive_integer AS INTEGER CHECK (VALUE > 0);
+
+CREATE DOMAIN email_address AS VARCHAR(255) CHECK (VALUE ~* '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+```
+- A **data type** is an atomic (lowest level) definition of a table column. 
+- With CREATE TYPE you can create composite types or enum or others that they are structurally different to existing types. Example:
+```
+CREATE TYPE address_type AS (
+  street VARCHAR(255),
+  city VARCHAR(255),
+  state VARCHAR(2),
+  zip_code VARCHAR(10)
+);
+```
+
 
 # Base
 - `generator`, `provider`, `container*`, `extension`
