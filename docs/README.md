@@ -1,36 +1,45 @@
 #referecens 
+
 - [Nette Utility Classes](https://github.com/nette/utils)
-- [ReverseRegex - Use Regular Expressions to generate text strings ](https://github.com/icomefromthenet/ReverseRegex)
+- [ReverseRegex - Use Regular Expressions to generate text strings](https://github.com/icomefromthenet/ReverseRegex)
 - [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
-  ```
-   <<Core>> := <<Extension>> := <<Provider>> := <<Generator>> 
+
+  ```sh
+  <<Core>> := <<Extension>> := <<Provider>> := <<Generator>> 
    BarCode     Address          Address         ChanceGenerator
    Blood       BarCode          Color           UniqueGenerator
    ...         ...              ...             ...
    ```
+
 # Interface
+
 - **schema**: column/attribute, row/tuple, table/relation
 - **data type**: int, float, date, datetime, char/string, set/enum/dict, list, range
 - **domain**
   - **general domains**: *sequence, random, biased_random*
-  - **domains with a pattern**: *email, name, address, city, timeslice*
-  - **domains with a precise pattern**: *card_no, isbn10, zipcode, tel, color*
+  - **domains with a pattern**: *email, tel, name, address*
+  - **domains with a precise pattern**: *card_no, isbn, zipcode*
   - **other domains**
 - **formatter**: sprintf, regexp, sql_values
 - **dependency**: functional, multivalued-functional, user-defined 
 
 CF.
+
 - A **domain** for database designers is like a typedef for C developers; a domain allows you to define a data type and re-use it across your datamodel. With CREATE DOMAIN you can create a subtype that is based on one existing type (adding constraints to it). Example:
-```
-Create DOMAIN person_name_type AS varchar(40);
+
+```sql
+Create DOMAIN person_name_type AS VARCHAR(40);
 
 CREATE DOMAIN positive_integer AS INTEGER CHECK (VALUE > 0);
 
 CREATE DOMAIN email_address AS VARCHAR(255) CHECK (VALUE ~* '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 ```
+
 - A **data type** is an atomic (lowest level) definition of a table column. 
+
 - With CREATE TYPE you can create composite types or enum or others that they are structurally different to existing types. Example:
-```
+
+```sql
 CREATE TYPE address_type AS (
   street VARCHAR(255),
   city VARCHAR(255),
@@ -39,8 +48,8 @@ CREATE TYPE address_type AS (
 );
 ```
 
-
 # Base
+
 - `generator`, `provider`, `container*`, `extension`
 - `validator`, `exceptor`, `guesser`, `fomatter`
 - `faker_array()`
@@ -50,10 +59,9 @@ CREATE TYPE address_type AS (
 - `set_eq`
 - `seq_eq`
 
-  
 ## References
-1. [PSR-11: Container Interface] (https://www.php-fig.org/psr/psr-11/)
-2. [] ()
+
+1. [PSR-11: Container Interface] (<https://www.php-fig.org/psr/psr-11/>)
 
 # PHP native array functions 
 
@@ -97,7 +105,7 @@ CREATE TYPE address_type AS (
 - `array_udiff_uassoc`: データと添字の比較にコールバック関数を用いて配列の差を計算する
 - `array_udiff`: データの比較にコールバック関数を用いて配列の差を計算する
 
-```
+```sh
     array_intersect             use Value, not callback
     array_uintersect            use Value, callback receives Value
     array_intersect_key         use Key, not callback
@@ -118,6 +126,7 @@ CREATE TYPE address_type AS (
 ```
 
 ## generate, extract, transform
+
 - `array`: 配列を生成する
 - `range`: ある範囲の要素を含む配列を作成する
 - `compact`: 変数名とその値から配列を作成する
@@ -145,14 +154,15 @@ CREATE TYPE address_type AS (
 - `ksort`: 配列をキーで昇順にソートする
 - `krsort`: 配列をキーで降順にソートする
 - `natsort`: "自然順"アルゴリズムで配列をソートする
-- `natcasesort `: 大文字小文字を区別しない"自然順"アルゴリズムを用いて配列をソートする
+- `natcasesort`: 大文字小文字を区別しない"自然順"アルゴリズムを用いて配列をソートする
 - `usort`: ユーザー定義の比較関数を使用して、配列を値でソートする
 - `uasort`: ユーザー定義の比較関数で配列をソートし、連想インデックスを保持する
 - `uksort`: ユーザー定義の比較関数を用いて、キーで配列をソートする
 - `array_multisort`: 複数または多次元の配列をソートする
 - `array_reverse`: 要素を逆順にした配列を返す
 
-## traverse, iterate 
+## traverse, iterate
+
 - `each`: 配列から現在のキーと値のペアを返して、カーソルを進める
 - `current`, `pos`: 配列内の現在の要素を返す
 - `next`: 配列の内部ポインタを進める
@@ -167,6 +177,7 @@ CREATE TYPE address_type AS (
 - `array_walk_recursive`: 配列の全ての要素に、ユーザー関数を再帰的に適用する
 
 ## aggregate
+
 - `count`, `sizeof`: 配列または Countable オブジェクトに含まれるすべての要素の数を数える
 - `array_count_values`: 配列内に存在する、異なる値の出現回数を数える
 - `array_sum`: 配列の中の値の合計を計算する
@@ -201,8 +212,10 @@ echo PHP_EOL;
 list(1 => $second, 3 => $fourth) = [1, 2, 3, 4];
 echo "$second, $fourth\n";
 ```
+
 Output:
-```
+
+```sh
 id: 1, name: Tom
 id: 2, name: Fred
 
