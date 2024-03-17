@@ -1,8 +1,16 @@
 <?php
-namespace ksu;
+
+/**
+ * File-level docblock.
+ */
+
+declare(strict_types=1);
+
+namespace Ksu\PHPUtil;
 
 class Util {
-    public static function jpdate($date, $withtime=false, $withyear=true){
+    public static function jpdate(string $date, bool $withtime=false,bool $withyear=true): string
+    {
         $wdays = ['日','月','火','水','木','金','土'];
         $_date = new \DateTimeImmutable($date);
         $w = $_date->format('w');
@@ -15,7 +23,7 @@ class Util {
         return $_date->format('n月d日(') . $wdays[$w]. ')' . $time;
     }
 
-    public static function slice_by_key($items, $keys)
+    public static function slice_by_key(array $items, array $keys): array 
     {
         $sliced = [];
         foreach(is_array($keys) ? $keys : [$keys] as $k){
@@ -25,7 +33,7 @@ class Util {
     }
 
     /** transform a row to a Key-Value Pair */
-    public static function associate($data, $key_field, $callback=null)
+    public static function associate(array $data, string $key_field, ?callable $callback=null): array
     {
         $options = [];
         foreach($data as $row){
@@ -36,7 +44,7 @@ class Util {
         return $options;
     }
         
-    public static function unifom_rand($items, $n=1)
+    public static function unifom_rand(array $items, int $n=1): array
     {
         $rand_keys = array_rand($items, $n);
         return self::slice_by_key($items, $rand_keys);
@@ -68,7 +76,7 @@ class Util {
                 return $item;
             }
         }  
-        return [];
+        return null;
     }
 
     static function combination(array $items, int $n) : ?array
