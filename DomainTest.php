@@ -17,19 +17,22 @@ date_default_timezone_set("Asia/Tokyo");
 
 header("Content-type: text/plain; charset=UTF-8");
 
-echo 'sequence of formatted integers', PHP_EOL;
+echo 'range of formatted integers', PHP_EOL;
+echo '----', PHP_EOL;
 foreach(Domain::numberRange(1, 20, 3, '%03d') as $v){
     echo $v ,PHP_EOL;
 }
 echo '---------------------', PHP_EOL;
 
-echo 'sequence of dates', PHP_EOL;
+echo 'range of dates', PHP_EOL;
+echo '----', PHP_EOL;
 foreach(Domain::dateRange('2024-3-1', '2024-3-31', 'P7D') as $v){
     echo $v ,PHP_EOL;
 }
 echo '---------------------', PHP_EOL;
 
-echo 'sequence of hex integers', PHP_EOL;
+echo 'range of hex integers', PHP_EOL;
+echo '----', PHP_EOL;
 foreach(Domain::numberRange(0x12, 0x84, 12, '%X') as $v){
     echo $v ,PHP_EOL;
 }
@@ -41,7 +44,8 @@ $gen   = new SimpleRandom(10007);
 $parser = new Parser($lexer,new Scope(),new Scope());
 
 $i = 0;
-echo 'sequence of random strings', PHP_EOL;
+echo 'random strings', PHP_EOL;
+echo '----', PHP_EOL;
 while ($i++ < 10){
     $result = '';
     $parser->parse()->getResult()->generate($result, $gen);

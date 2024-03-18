@@ -3,7 +3,10 @@
 - [Nette Utility Classes](https://github.com/nette/utils)
 - [ReverseRegex - Use Regular Expressions to generate text strings](https://github.com/icomefromthenet/ReverseRegex)
 - [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
-
+- [Stream your iterators] (https://github.com/stubbles/stubbles-sequence)
+- [Data sequences] (https://github.com/xp-forge/sequence)
+- [Period] (https://github.com/thephpleague/period)
+- [Stream - model a sequence of data elements made available over time] (https://github.com/willwashburn/stream)
   ```sh
   <<Core>> := <<Extension>> := <<Provider>> := <<Generator>> 
    BarCode     Address          Address         ChanceGenerator
