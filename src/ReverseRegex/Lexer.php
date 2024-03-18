@@ -32,72 +32,72 @@ class Lexer extends BaseLexer
     const T_LITERAL_NUMERIC =  1;
     
     /**
-      *  The opening character for group. [(]
+      *  The opening character for group (
       */
     const T_GROUP_OPEN = 2;
     
     /**
-      *  The closing character for group  [)]
+      *  The closing character for group )
       */
     const T_GROUP_CLOSE = 3;
     
     /**
-      *  Opening character for Quantifier  ({)
+      *  Opening character for Quantifier {
       */
     const T_QUANTIFIER_OPEN = 4;
     
     /**
-      *   Closing character for Quantifier (})
+      *   Closing character for Quantifier }
       */
     const T_QUANTIFIER_CLOSE = 5;
     
     /**
-      *  Star quantifier character (*)
+      *  Star quantifier character *
       */
     const T_QUANTIFIER_STAR = 6;
     
     /**
-      *  Pluse quantifier character (+)
+      *  Pluse quantifier character +
       */
     const T_QUANTIFIER_PLUS = 7;
     
     /**
-      *  The one but optonal character (?) 
+      *  The one but optonal character ? 
       */
     const T_QUANTIFIER_QUESTION = 8;
     
     /**
-      *  Start of string character (^)
+      *  Start of string character ^
       */
     const T_START_CARET  = 9;
     
     /**
-      *  End of string character ($)
+      *  End of string character $
       */
     const T_END_DOLLAR   = 10;
     
     /**
-      *  Range character inside set ([)
+      *  Range character inside set [
       */
     const T_SET_OPEN     = 11;
     
     /**
-      *  Range character inside set (])
+      *  Range character inside set ]
       */
     const T_SET_CLOSE   = 12;
     
     /**
-      *  Range character inside set (-)
+      *  Range character inside set -
       */
     const T_SET_RANGE    = 13;
     
     /**
-      *  Negated Character in set ([^) 
+      *  Negated Character in set [^ 
       */
     const T_SET_NEGATED  = 14;
     
     /**
-      *  The either character (|) 
+      *  The either character | 
       */
     const T_CHOICE_BAR  = 15;
     

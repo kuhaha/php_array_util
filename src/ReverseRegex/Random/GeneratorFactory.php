@@ -9,9 +9,7 @@ use ReverseRegex\Exception as ReverseRegexException;
   *   @author Lewis Dyer <getintouch@icomefromthenet.com>
   */    
 class GeneratorFactory 
-{
-    
-    
+{    
     /**
       *  @var string[] list of Generators
       *
@@ -39,7 +37,7 @@ class GeneratorFactory
     //  ----------------------------------------------------------------------------
     
      /**
-      *  Resolve a Dcotrine DataType Class
+      *  Resolve a Doctrine DataType Class
       *
       *  @param string the random generator type name
       *  @access public

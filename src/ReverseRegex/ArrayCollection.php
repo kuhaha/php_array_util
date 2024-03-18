@@ -48,8 +48,7 @@ class ArrayCollection extends BaseCollection
         
         return $this->current();
     }
-    
-    
+
 }
 /* End of Class */
 

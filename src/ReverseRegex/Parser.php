@@ -1,7 +1,6 @@
 <?php
 namespace ReverseRegex;
 
-
 use ReverseRegex\Exception as ParserException;
 use ReverseRegex\Lexer;
 use ReverseRegex\Generator\Scope;
@@ -77,8 +76,7 @@ class Parser
       *  @return 
       */
     public function parse($sub = false)
-    {
-        
+    {        
         try {
         
             while($this->lexer->moveNext()) {
@@ -121,45 +119,50 @@ class Parser
                         $this->left = new LiteralScope();
                         self::createSubParser('character')->parse($this->left,$this->head,$this->lexer);
                         $this->head->attach($this->left);
-                        
-                            
+       
                     break;
-                    case ($this->lexer->isNextTokenAny(array(
-                                                             Lexer::T_DOT,
-                                                             Lexer::T_SHORT_D,
-                                                             Lexer::T_SHORT_NOT_D,
-                                                             Lexer::T_SHORT_W,
-                                                             Lexer::T_SHORT_NOT_W,
-                                                             Lexer::T_SHORT_S,
-                                                             Lexer::T_SHORT_NOT_S))):
+                    case ($this->lexer->isNextTokenAny(
+                          array(
+                            Lexer::T_DOT,
+                            Lexer::T_SHORT_D,
+                            Lexer::T_SHORT_NOT_D,
+                            Lexer::T_SHORT_W,
+                            Lexer::T_SHORT_NOT_W,
+                            Lexer::T_SHORT_S,
+                            Lexer::T_SHORT_NOT_S
+                          )
+                        )):
                         
                         # match short (. \d \D \w \W \s \S)
                         $this->left = new LiteralScope();
                         self::createSubParser('short')->parse($this->left,$this->head,$this->lexer);
                         $this->head->attach($this->left);
-                        
-                        
+   
                     break;
-                    case ($this->lexer->isNextTokenAny(array(
-                                                             Lexer::T_SHORT_P,
-                                                             Lexer::T_SHORT_UNICODE_X,
-                                                             Lexer::T_SHORT_X))):
-                        
+                    case ($this->lexer->isNextTokenAny(
+                          array(
+                            Lexer::T_SHORT_P,
+                            Lexer::T_SHORT_UNICODE_X,
+                            Lexer::T_SHORT_X
+                          )
+                        )):
+
                         # match short (\p{L} \x \X  )
                         $this->left = new LiteralScope();
                         self::createSubParser('unicode')->parse($this->left,$this->head,$this->lexer);
                         $this->head->attach($this->left);
-                        
-                        
+   
                     break;
-                    case ($this->lexer->isNextTokenAny(array(
-                                                             Lexer::T_QUANTIFIER_OPEN,
-                                                             Lexer::T_QUANTIFIER_PLUS,
-                                                             Lexer::T_QUANTIFIER_QUESTION,
-                                                             Lexer::T_QUANTIFIER_STAR,
-                                                             Lexer::T_QUANTIFIER_OPEN
-                                                             ))):
-                        
+                    case ($this->lexer->isNextTokenAny(
+                          array(
+                            Lexer::T_QUANTIFIER_OPEN,
+                            Lexer::T_QUANTIFIER_PLUS,
+                            Lexer::T_QUANTIFIER_QUESTION,
+                            Lexer::T_QUANTIFIER_STAR,
+                            Lexer::T_QUANTIFIER_OPEN
+                          )
+                        )):
+
                         # match quantifiers 
                         self::createSubParser('quantifer')->parse($this->left,$this->head,$this->lexer);
                         
@@ -172,8 +175,7 @@ class Parser
                         $this->head = new Scope();
                         $this->result->useAlternatingStrategy();
                         $this->result->attach($this->head);
-                        
-                        
+   
                     break;    
                     default:
                         # ignore character 

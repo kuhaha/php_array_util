@@ -86,7 +86,7 @@ class SrandRandom implements GeneratorInterface
     /**
       *  Generate a value between $min - $max
       *
-      *  @param integer $max
+      *  @param integer $min
       *  @param integer $max 
       */
     public function generate($min = 0,$max = null)

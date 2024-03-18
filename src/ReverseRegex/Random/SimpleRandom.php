@@ -93,7 +93,7 @@ class SimpleRandom implements GeneratorInterface
     /**
       *  Generate a random numer
       *
-      *  @param integer $max
+      *  @param integer $min
       *  @param integer $max 2,796,203 largest possible max
       */
     public function generate($min = 0, $max = null)
