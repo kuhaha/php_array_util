@@ -5,6 +5,7 @@
 - [phpfaker/Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
 - [stubbles/sequence - stream your iterators](https://github.com/stubbles/stubbles-sequence)
 - [xp-forge/sequence - allows working with data sequences of different kinds in a functional style, e.g. map/reduce](https://github.com/xp-forge/sequence)
+- [Docrine common sequence]()
 - [Period - a PHP time range API covers all basic operations regarding time ranges](https://github.com/thephpleague/period)
 - [Stream - model a sequence of data elements made available over time](https://github.com/willwashburn/stream)
 - [Formatting Dates and Times](https://unicode-org.github.io/icu/userguide/format_parse/datetime/)
