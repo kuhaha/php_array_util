@@ -1,12 +1,14 @@
-#referecens 
+# Referecens 
 
-- [Nette Utility Classes](https://github.com/nette/utils)
-- [ReverseRegex - Use Regular Expressions to generate text strings](https://github.com/icomefromthenet/ReverseRegex)
-- [Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
-- [Stream your iterators] (https://github.com/stubbles/stubbles-sequence)
-- [Data sequences] (https://github.com/xp-forge/sequence)
-- [Period] (https://github.com/thephpleague/period)
-- [Stream - model a sequence of data elements made available over time] (https://github.com/willwashburn/stream)
+- [nette/utils - Nette Utility Classes](https://github.com/nette/utils)
+- [icomefromthenet/ReverseRegex - Use Regular Expressions to generate text strings](https://github.com/icomefromthenet/ReverseRegex)
+- [phpfaker/Faker - A PHP library that generates fake data for you](https://github.com/FakerPHP/Faker)
+- [stubbles/sequence - stream your iterators](https://github.com/stubbles/stubbles-sequence)
+- [xp-forge/sequence - allows working with data sequences of different kinds in a functional style, e.g. map/reduce](https://github.com/xp-forge/sequence)
+- [Period - a PHP time range API covers all basic operations regarding time ranges](https://github.com/thephpleague/period)
+- [Stream - model a sequence of data elements made available over time](https://github.com/willwashburn/stream)
+- [Formatting Dates and Times](https://unicode-org.github.io/icu/userguide/format_parse/datetime/)
+
   ```sh
   <<Core>> := <<Extension>> := <<Provider>> := <<Generator>> 
    BarCode     Address          Address         ChanceGenerator
@@ -64,7 +66,7 @@ CREATE TYPE address_type AS (
 
 ## References
 
-1. [PSR-11: Container Interface] (<https://www.php-fig.org/psr/psr-11/>)
+- [PSR-11: Container Interface](<https://www.php-fig.org/psr/psr-11/>)
 
 # PHP native array functions 
 
@@ -209,7 +211,7 @@ $data = [
     ["id" => 2, "name" => 'Fred'],
 ];
 foreach ($data as ["id" => $id, "name" => $name]) {
-    echo "id: $id, name: $name\n";
+    echo "id: $id, name: $name", PHP_EOL;;
 }
 echo PHP_EOL;
 list(1 => $second, 3 => $fourth) = [1, 2, 3, 4];

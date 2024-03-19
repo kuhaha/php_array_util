@@ -7,3 +7,8 @@
 declare(strict_types=1);
 
 namespace Ksu\PHPUtil;
+
+class Generator
+{
+    
+}

@@ -29,7 +29,7 @@ class Domain
         if (\is_numeric($start) and \is_numeric($end)){
             if (!$step) $step = self::DEFAULT_NUMBER_STEP;
             foreach(\range($start, $end, $step) as $val){
-                yield static::format($val, $formatter);
+                yield static::_format($val, $formatter);
             }
         }
     }
@@ -45,7 +45,7 @@ class Domain
         $date_step = $date_step ? $date_step : \DateInterval::createFromDateString($step);
         if ($date_step){
             for ($date = $date1; $date <= $date2; $date->add($date_step)){
-                yield $date->format($formatter);
+                yield static::_dateformat($date, $formatter);
             }
         }
     }
@@ -56,27 +56,30 @@ class Domain
     static function charRange(string $start, string $end, int $step=1, string|callable $formatter='%s')
     {
         foreach (\range($start, $end, $step) as $str){
-            yield static::format($str, $formatter);
+            yield static::_format($str, $formatter);
         }
     }
 
     /**
      * 
      */
-    static function format(mixed $val, string|callable $formatter): string
+    private static function _format(mixed $val, string|callable $formatter): string
     {
         if (is_callable($formatter)){
-            return $formatter($val);
+            return call_user_func($formatter, $val);
         }
         return sprintf($formatter, $val);
     }
 
     /**
-     * resource: regexp, file, stream
+     * 
      */
-    static function stringDomain($resource, $formatter)
+    private static function _dateformat(\DateTime $date, string|callable $formatter): string
     {
-        
+        if (is_callable($formatter)){
+            return call_user_func($formatter, $date);
+        }
+        return $date->format($formatter);
     }
 
 }
