@@ -26,10 +26,10 @@ class Domain
      */
     static function numberRange(int|float $start, int|float $end, int|float $step=1, string|callable $formatter='%f') 
     {
-        if (\is_numeric($start) and \is_numeric($end)){
+        if (is_numeric($start) and \is_numeric($end)){
             if (!$step) $step = self::DEFAULT_NUMBER_STEP;
             foreach(\range($start, $end, $step) as $val){
-                yield static::_format($val, $formatter);
+                yield static::format($val, $formatter);
             }
         }
     }
@@ -39,13 +39,13 @@ class Domain
      */
     static function dateRange(string $start, string $end, string $step='P1D', string|callable $formatter='Y-m-d') 
     {
-        $date1 = \date_create($start); 
-        $date2 = \date_create($end);
+        $date1 = date_create($start); 
+        $date2 = date_create($end);
         $date_step = new \DateInterval($step);
         $date_step = $date_step ? $date_step : \DateInterval::createFromDateString($step);
         if ($date_step){
             for ($date = $date1; $date <= $date2; $date->add($date_step)){
-                yield static::_dateformat($date, $formatter);
+                yield static::dateformat($date, $formatter);
             }
         }
     }
@@ -55,18 +55,18 @@ class Domain
      */
     static function charRange(string $start, string $end, int $step=1, string|callable $formatter='%s')
     {
-        foreach (\range($start, $end, $step) as $str){
-            yield static::_format($str, $formatter);
+        foreach (range($start, $end, $step) as $str){
+            yield static::format($str, $formatter);
         }
     }
 
     /**
      * 
      */
-    private static function _format(mixed $val, string|callable $formatter): string
+    private static function format(mixed $val, string|callable $formatter): string
     {
         if (is_callable($formatter)){
-            return call_user_func($formatter, $val);
+            return $formatter($val);
         }
         return sprintf($formatter, $val);
     }
@@ -74,10 +74,10 @@ class Domain
     /**
      * 
      */
-    private static function _dateformat(\DateTime $date, string|callable $formatter): string
+    private static function dateformat(\DateTime $date, string|callable $formatter): string
     {
         if (is_callable($formatter)){
-            return call_user_func($formatter, $date);
+            return $formatter($date);
         }
         return $date->format($formatter);
     }

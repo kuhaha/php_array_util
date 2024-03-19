@@ -9,6 +9,10 @@ use ReverseRegex\Random\SimpleRandom;
 use ReverseRegex\Parser;
 use ReverseRegex\Generator\Scope;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
+use stubbles\sequence\Sequence;
+
 // Error reporting
 // error_reporting(0);   // Product environment, reporting nothing
 // error_reporting(E_ERROR | E_PARSE); // Avoid E_WARNING, E_NOTICE, etc
@@ -95,3 +99,65 @@ while ($i++ < 10){
     $parser->parse()->getResult()->generate($result, $gen);
     echo $result, PHP_EOL;
 }
+echo '---------------------', PHP_EOL;
+
+echo 'stubbles/sequence, sequence of numbers', PHP_EOL;
+$start = 1;
+$n = 20;
+$values = Sequence::generate(
+    $start,
+    function($previous) { return $previous + 2; },
+    function($value, $invocations) use($n) { return $value < (PHP_INT_MAX - 1) &&  $n >= $invocations; }
+)->values();
+
+echo implode(',', $values), PHP_EOL;
+echo '---------------------', PHP_EOL;
+
+echo 'stubbles/sequence, sequence of dates', PHP_EOL;
+$n = 20;
+$start = '2016-3-20';
+$values = Sequence::generate(
+    $start,
+    function($previous) use ($jpdate) { 
+        $dt = new DateTime($previous);
+        $dt = $dt->add(new DateInterval('P1Y')); 
+        return $dt->format('Y-m-d');
+    },
+    function($value, $invocations) use($n) { return $n >= $invocations; }
+)->values();
+
+$toJp = function ($d){
+    $dt = new DateTime($d);
+    $formatter = new IntlDateFormatter('ja_JP@calendar=japanese', 
+    IntlDateFormatter::FULL,IntlDateFormatter::FULL, 'Asia/Tokyo', IntlDateFormatter::TRADITIONAL);
+    $formatter->setPattern('Gy年M月d日(EE)');
+    return $formatter->format($dt);
+};
+echo implode(PHP_EOL, array_map($toJp, $values)), PHP_EOL;
+echo '---------------------', PHP_EOL;
+
+echo 'stubbles/sequence, Fibonacci sequence', PHP_EOL;
+class Tuple{
+    public $val;
+    function __construct($array) {
+        $this->val= $array;
+    }
+    function get($i){
+        return $this->val[$i];
+    }
+    function __toString(){
+        return '[' . implode(',', $this->val). ']'; 
+    }
+}
+$n = 30;
+$start = new ArrayCollection([1,1]);
+$values = Sequence::generate(
+    $start,
+    function($previous) { 
+        return new Tuple([$previous->get(1), $previous->get(0)+$previous->get(1)]);
+    },
+    function($value, $invocations) use($n) { return $n >= $invocations; }
+)->values();
+
+echo implode(PHP_EOL, array_map(fn($v)=>$v->get(0), $values)), PHP_EOL;
+echo '---------------------', PHP_EOL;
