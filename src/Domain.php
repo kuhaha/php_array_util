@@ -8,11 +8,14 @@ declare(strict_types=1);
 
 namespace Ksu\PHPUtil;
 
-use ReverseRegex\Lexer;
-use ReverseRegex\Parser;
+use stubbles\sequence\Sequence;
+use ReverseRegex\{Lexer, Parser};
 use ReverseRegex\Generator\Scope;
 use ReverseRegex\Random\MersenneRandom;
 
+/**
+ * A domain is the entire set of values possible for independent variables  
+ */
 class Domain
 {
     const MAX_INT = PHP_INT_MAX;
@@ -24,62 +27,53 @@ class Domain
     /**
      * 
      */
-    static function numberRange(int|float $start, int|float $end, int|float $step=1, string|callable $formatter='%f') 
+    static function number(int|float $start, int|float $end, int|float $step=1, string|callable $formatter='%f') 
     {
-        if (is_numeric($start) and \is_numeric($end)){
-            if (!$step) $step = self::DEFAULT_NUMBER_STEP;
-            foreach(\range($start, $end, $step) as $val){
-                yield static::format($val, $formatter);
-            }
+        foreach(\range($start, $end, $step) as $val){
+            yield static::_format($val, $formatter);
         }
     }
 
     /**
      * 
      */
-    static function dateRange(string $start, string $end, string $step='P1D', string|callable $formatter='Y-m-d') 
+    static function date(string $start, string $end, string $step='P1D', string|callable $formatter='Y-m-d') 
     {
-        $date1 = date_create($start); 
-        $date2 = date_create($end);
-        $date_step = new \DateInterval($step);
-        $date_step = $date_step ? $date_step : \DateInterval::createFromDateString($step);
-        if ($date_step){
-            for ($date = $date1; $date <= $date2; $date->add($date_step)){
-                yield static::dateformat($date, $formatter);
-            }
+        $date_end = date_create($end);
+        $date_step = new \DateInterval($step) ?: \DateInterval::createFromDateString($step);
+        for ($date = date_create($start); $date <= $date_end; $date->add($date_step)){
+            yield static::_format($date, $formatter);
         }
     }
 
     /**
      * 
      */
-    static function charRange(string $start, string $end, int $step=1, string|callable $formatter='%s')
+    static function regex(string $regex, int $n,  int|float $seed=null)
     {
-        foreach (range($start, $end, $step) as $str){
-            yield static::format($str, $formatter);
+        $seed = $seed ?? time();
+        $gen   = new MersenneRandom($seed);
+        $lexer = new Lexer($regex);
+        $parser = new Parser($lexer, new Scope(), new Scope());
+        for ($i = 0; $i < $n; $i++){
+            $result = '';
+            $parser->parse()->getResult()->generate($result, $gen);
+            yield $result;
         }
     }
 
     /**
      * 
      */
-    private static function format(mixed $val, string|callable $formatter): string
+    private static function _format(mixed $val, string|callable $formatter) : string
     {
-        if (is_callable($formatter)){
+        if (is_callable($formatter) or $formatter instanceof \IntlDateFormatter){
             return $formatter($val);
         }
-        return sprintf($formatter, $val);
-    }
-
-    /**
-     * 
-     */
-    private static function dateformat(\DateTime $date, string|callable $formatter): string
-    {
-        if (is_callable($formatter)){
-            return $formatter($date);
+        if ($val instanceof \DateTime){
+            return $val->format($formatter);
         }
-        return $date->format($formatter);
+        return sprintf($formatter, $val);
     }
 
 }
