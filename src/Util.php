@@ -32,7 +32,14 @@ class Util {
         return $sliced;
     }
 
-    /** transform a row to a Key-Value Pair */
+    /**
+     * Transform an array to a Key-Value Pair
+     *
+     * @param array $data
+     * @param string $key_field
+     * @param callable|null $callback
+     * @return array
+     */
     public static function associate(array $data, string $key_field, ?callable $callback=null): array
     {
         $options = [];
@@ -43,16 +50,26 @@ class Util {
         }
         return $options;
     }
-        
+    
+    /**
+     * Choose n items uniformly at randomly from an array   
+     *
+     * @param array $items
+     * @param integer $n
+     * @return array
+     */
     public static function unifom_rand(array $items, int $n=1): array
     {
         $rand_keys = array_rand($items, $n);
         return self::slice_by_key($items, $rand_keys);
     }
 
-
-    /** weighted_rand() : returns n elements from an array selected randpmly at unform
+    /**
+     * Choose n items from an array each with a probability proportional to its weight  
      * Example: weighted_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
+     * @param array $prob_items
+     * @param integer $n
+     * @return array|null
      */
     public static function weighted_rand(array $prob_items, int $n=1) : ?array 
     {        
@@ -79,55 +96,33 @@ class Util {
         return null;
     }
 
-    static function combination(array $items, int $n) : ?array
+    /**
+     * returns combinations of length r from n items
+     *
+     * @param array $items
+     * @param integer $r
+     * @return array|null
+     */
+    static function combination(array $items, int $r) : ?array
     {
         $items = array_values(array_unique($items));
-        $n_item = count($items); 
-        if ($n < 1 or $n > $n_item){
-            return null;
-        }
-        $m = $n_item - $n + 1;
-        $matrix = [];
-        for($i=0; $i < $n; $i++){
-            foreach(array_slice($items, $i, $m) as $j=>$item){
-                $matrix[$i][$j] = $item;
-            }
-        }
+        $n = count($items);
+        if($r < 0 || $n < $r) return null; 
+        if ($r == 1) return array_chunk($items, 1);
         $result = [];
-        for ($i = 0; $i < $m; $i++){
-            $result[] = array_column($matrix, $i);
-        }        
+        for($i=0; $i < $n-$r+1; $i++){
+            $sliced = array_slice($items, $i + 1);
+            $comb = combination($sliced, $r-1);
+            foreach($comb as $one_set){
+                array_unshift($one_set, $items[$i]);
+                $result[] = $one_set;
+            }
+        }            
         return $result;
     }
-    static function permutation(array $items, int $n) : ?array
-    {
-        $items = array_values(array_unique($items));
-        $n_item = count($items); 
-        if ($n < 1 or $n > $n_item){
-            return null;
-        }
-        $result = [];
-        if($n == 1){
-            foreach($items as $item){
-                $result[] = [$item];
-            }
-            return $result;
-        }
-    
-        if($n > 1){
-            foreach($items as $key => $item){
-                // $item を除いた配列を作成
-                $newArr = array_filter($items, function($k) use($key) {
-                    return $k !== $key;
-                }, ARRAY_FILTER_USE_KEY);
-                // 再帰処理 二次元配列が返ってくる
-                $recursion = self::permutation($newArr, $n - 1);
-                foreach($recursion as $one_set){
-                    array_unshift($one_set, $item);
-                    $result[] = $one_set;
-                }
-            }
-        }    
-        return $result;
+
+    static function transpose($array) {
+        return array_map(null, ...$array);
     }
+   
 }
