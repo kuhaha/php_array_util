@@ -30,7 +30,6 @@ class Column
      */
     function generate()
     {
-        $formatter = $formatter ?? $this->formatter;
         $values = $this->column->map(
             function($gen){
                 $val = $gen->current();
@@ -38,7 +37,7 @@ class Column
                 return $val;
             }
         )->values();
-        return static::_format($values, $formatter);
+        return static::_format($values, $this->formatter);
     }
 
     /**
@@ -47,7 +46,7 @@ class Column
     private static function _format(array $values, string|callable $formatter) : string
     {
         if (is_callable($formatter)){
-            return call_user_func_array($formatter,$values);
+            return call_user_func_array($formatter, $values);
         }
         return vsprintf($formatter, $values);
     }

@@ -19,7 +19,7 @@
 
 - `number`
 - `datetime`
-- misc
+- `misc`
 
 ## `format`
 
@@ -46,8 +46,8 @@
   - no
 - `name`
   - firstname
-    - male
-    - female
+    - *male*
+    - *female*
   - lastname
 - `tel`
   - area
