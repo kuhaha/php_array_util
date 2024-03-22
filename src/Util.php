@@ -73,7 +73,8 @@ class Util {
 
     /**
      * Transform array to a key-value pair:
-     * [['id'=1, 'name'=>'tom', 'age'=>34],...] will return [1=>'tom', 2=>'taro',...]
+     * associate([['id'=1, 'name'=>'tom', 'age'=>34],...],'id',fn($v)=>$v['name']) 
+     * will return [1=>'tom', 2=>'taro',...]
      * 
      * @param array $array
      * @param string $key_field
@@ -92,7 +93,7 @@ class Util {
     }
     
     /**
-     * Choose n items from array uniformly at random  
+     * Return n items from array chosen uniformly at random  
      *
      * @param array $array
      * @param integer $n
@@ -105,7 +106,7 @@ class Util {
     }
 
     /**
-     * Choose n items from array with a probability proportional to its weight  
+     * Return n items chosen from array with a probability proportional to its weight  
      * Example: weighted_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
      * 
      * @param array $prob_items
