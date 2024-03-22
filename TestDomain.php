@@ -22,7 +22,7 @@ header("Content-type: text/plain; charset=UTF-8");
  *  `IntlDateFormatter::setPattern()`
  */
 echo 'IntlDateFormatter::setPattern()', PHP_EOL;
-$dt = new DateTime;
+$dt = new DateTime('1945-12-13');
 $formatter = new IntlDateFormatter(
     'ja_JP', 
     IntlDateFormatter::SHORT, 
@@ -66,7 +66,7 @@ echo '---------------------', PHP_EOL;
 
 echo 'range of dates', PHP_EOL;
 echo '----', PHP_EOL;
-foreach (Domain::date('2024-3-1', '2024-3-31', 'P7D') as $v){
+foreach (Domain::date('1924-3-1', '1924-3-31', 'P7D') as $v){
     echo $v ,PHP_EOL;
 }
 /**
@@ -92,7 +92,7 @@ $jpdate = function($dt){
     return $formatter->format($dt);
 };
 echo '----', PHP_EOL;
-foreach(Domain::date('2024-3-1', '2024-3-31', 'P3D', $jpdate) as $v){
+foreach(Domain::date('1924-3-1', '1924-3-31', 'P3D', $jpdate) as $v){
     echo $v ,PHP_EOL;
 }
 echo '---------------------', PHP_EOL;
@@ -130,7 +130,7 @@ echo '---------------------', PHP_EOL;
 
 echo 'sequence of dates', PHP_EOL, PHP_EOL;
 $n = 20;
-$start = '2016-3-20';
+$start = '1816-3-20';
 $values = Sequence::generate(
     $start,
     function ($previous) { 

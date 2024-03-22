@@ -37,19 +37,9 @@ class Column
                 return $val;
             }
         )->values();
-        return static::_format($values, $this->formatter);
-    }
-
-    /**
-     * 
-     */
-    private static function _format(array $values, string|callable $formatter) : string
-    {
-        if (is_callable($formatter)){
-            return call_user_func_array($formatter, $values);
+        if (is_callable($this->formatter)){
+            return call_user_func_array($this->formatter, $values);
         }
-        return vsprintf($formatter, $values);
+        return vsprintf($this->formatter, $values);
     }
-
-
 }
