@@ -59,8 +59,8 @@ class Util {
     /**
      * Array slice function that works with associative arrays (keys):
      * $arr = ['name'=>'Nathan', 'age'=>20, 'height'=>6];
-     * array_slice_assoc($arr, ['name','age']); will return
-     *   ['name' = 'Nathan','age' = 20]
+     * array_slice_assoc($arr, ['name','age']); will return ['name'=>'Nathan','age'=>20]
+     * 
      * @param array $array
      * @param array $keys
      * @return array
@@ -72,8 +72,9 @@ class Util {
 
 
     /**
-     * Transform array to a key-value pair
-     * [['id'=1, 'name'=>'tom', 'age'=>34],...]=>[1=>'tom', 1=>'taro',...]
+     * Transform array to a key-value pair:
+     * [['id'=1, 'name'=>'tom', 'age'=>34],...] will return [1=>'tom', 2=>'taro',...]
+     * 
      * @param array $array
      * @param string $key_field
      * @param callable|null $callback
@@ -106,6 +107,7 @@ class Util {
     /**
      * Choose n items from array with a probability proportional to its weight  
      * Example: weighted_rand(['J'=>10, 'Q'=>25, 'K'=>15, 'A'=>50], 2) => ['Q','K']
+     * 
      * @param array $prob_items
      * @param integer $n
      * @return array|null
