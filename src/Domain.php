@@ -42,7 +42,7 @@ class Domain
     /**
      * 
      */
-    static function regex(string $regex, int $n,  int|float $seed=null)
+    static function string(string $regex, int $n,  int|float $seed=null)
     {
         $seed = $seed ?? time();
         $gen   = new MersenneRandom($seed);

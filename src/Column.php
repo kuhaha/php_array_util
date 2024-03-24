@@ -37,9 +37,6 @@ class Column
                 return $val;
             }
         )->values();
-        if (is_callable($this->formatter)){
-            return call_user_func_array($this->formatter, $values);
-        }
-        return vsprintf($this->formatter, $values);
+       return Formatter::format($values, $this->formatter);
     }
 }

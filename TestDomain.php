@@ -69,16 +69,7 @@ echo '----', PHP_EOL;
 foreach (Domain::date('1924-3-1', '1924-3-31', 'P7D') as $v){
     echo $v ,PHP_EOL;
 }
-/**
- * IntlDateFormatter pattern characters ja_JP, 和暦TRADITIONALの場合:
- * G - 年号「昭和」「令和」, GGGGG - 年号略称「S」「R」
- * y - 年号年「6」  
- * M - 月数字「3」,  MM - 月数字ゼロ付き「03」
- * d - 日数字「8」,  dd - 日数字ゼロ付き「08」
- * E EE - 曜日略称「火」, EEEE　- 曜日全称「火曜日」
- * パターン例：'Gy年M月d日(EE)',
- * 出力例：「令和6年3月10日(日)」
- */
+
 $jpdate = function($dt){    
     $formatter = new IntlDateFormatter(
         'ja_JP@calendar=japanese', 
@@ -108,7 +99,7 @@ $regex = '0[7-9]0-\d{4}-\d{4}, user\d{3}\@(gmail\.com|st\.kyusan-u\.ac\.jp)';
 echo 'random strings', PHP_EOL;
 echo '----', PHP_EOL;
 $n=20;
-foreach(Domain::regex($regex, $n) as $v){
+foreach(Domain::string($regex, $n) as $v){
     echo $v ,PHP_EOL;
 }
 

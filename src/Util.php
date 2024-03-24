@@ -9,21 +9,8 @@ declare(strict_types=1);
 namespace Ksu\PHPUtil;
 
 class Util {
-    public static function jpdate(string $date, bool $withtime=false,bool $withyear=true): string
-    {
-        $wdays = ['日','月','火','水','木','金','土'];
-        $_date = new \DateTimeImmutable($date);
-        $w = $_date->format('w');
-        $y = $_date->format('Y');
-        $time = $withtime ? $_date->format('H:i') : '';
-        if ($withyear){
-            $nengo = $y > 2019 ? '令和'.$y-2018 : '平成'. $y-1998;
-            return $nengo . $_date->format('年n月d日('). $wdays[$w]. ')' . $time;
-        }
-        return $_date->format('n月d日(') . $wdays[$w]. ')' . $time;
-    }
 
-    static function toja(string $date, bool $withweek=false, bool $withtime=false, bool $withyear=true)
+    static function ja_date(string $date, bool $withweek=false, bool $withtime=false, bool $withyear=true)
     {
         $formatter = new \IntlDateFormatter(
             'ja_JP@calendar=japanese', 

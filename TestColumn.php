@@ -14,10 +14,10 @@ date_default_timezone_set("Asia/Tokyo");
 
 header("Content-type: text/plain; charset=UTF-8");
 
-$n= 10;
-$domain1 = Domain::number(1, $n*3, 2, 'user%03d');
+$n= 20;
+$domain1 = Domain::number(1, $n*3, 1, 'k23rs%03d');
 $domain2 = Domain::date('2024-3-1', '2024-3-31', 'P1D');
-$domain3 = Domain::number(1, $n*3, 2, 'user%03d@qmail.com');
+$domain3 = Domain::number(1, $n*3, 1, 'k23rs%03d@st.kyusan-u.ac.jp');
 $domain4 = Domain::number(0.0, 4.0, 0.015);
 $tuple = new Tuple([
     'id'   => new Column($domain1),
