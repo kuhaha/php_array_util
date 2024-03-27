@@ -126,13 +126,13 @@ class Util {
     }
 
     /**
-     * returns combinations of size r from n items
+     * returns combinations of size r
      *
      * @param array $array
      * @param integer $r
      * @return array|null
      */
-    static function combination(array $array, int $r) : ?array
+    public static function combination(array $array, int $r) : ?array
     {
         $array = array_values(array_unique($array));
         $n = count($array);
@@ -150,7 +150,33 @@ class Util {
         return $result;
     }
 
-    static function product(array $array1, array $array2): array
+    /**
+     * Return combinations of all sizes
+     *
+     * @param array $array
+     * @return array|null
+     */
+    public static function combinations(array $array) : ?array
+    {
+        $array = array_values(array_unique($array));
+        $n = count($array);
+        $result = [];
+        for ($r = 1; $r <= $n; $r++){
+            $comb = static::combination($array, $r);
+            $result = array_merge($result, $comb);
+        }
+        return $result;
+    }
+
+
+    /**
+     * Return Cartesian product of two sets
+     *
+     * @param array $array1
+     * @param array $array2
+     * @return array
+     */
+    public static function product(array $array1, array $array2): array
     {
         $array1 = array_values(array_unique($array1));
         $array2 = array_values(array_unique($array2));
@@ -162,7 +188,14 @@ class Util {
         }
         return $result;
     }
-    static function products(array ...$array): ?array
+
+    /**
+     * Return Cartesian product of n sets
+     *
+     * @param array ...$array
+     * @return array|null
+     */
+    public static function products(array ...$array): ?array
     {
         $array1 = array_chunk(array_values(array_unique($array[0])), 1);
         for ($i = 1; $i < count($array); $i++){
@@ -181,20 +214,7 @@ class Util {
         return $array1;
     }
 
-    static function combinations(array $array) : ?array
-    {
-        $array = array_values(array_unique($array));
-        $n = count($array);
-        $result = [];
-        for ($r = 1; $r <= $n; $r++){
-            $comb = static::combination($array, $r);
-            $result = array_merge($result, $comb);
-        }
-        return $result;
-    }
-
-
-    static function transpose($array) {
+    public static function transpose($array) {
         return array_map(null, ...$array);
     }
    
