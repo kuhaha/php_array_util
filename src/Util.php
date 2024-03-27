@@ -141,7 +141,7 @@ class Util {
         $result = [];
         for ($i = 0; $i < $n - $r + 1; $i++){
             $sliced = array_slice($array, $i + 1);
-            $comb = combination($sliced, $r - 1);
+            $comb = static::combination($sliced, $r - 1);
             foreach ($comb as $one_set){
                 array_unshift($one_set, $array[$i]);
                 $result[] = $one_set;
@@ -149,6 +149,50 @@ class Util {
         }            
         return $result;
     }
+
+    static function product(array $array1, array $array2): array
+    {
+        $array1 = array_values(array_unique($array1));
+        $array2 = array_values(array_unique($array2));
+        $result = [];
+        foreach ($array1 as $a1){
+            foreach ($array2 as$a2){
+                $result[] = array($a1, $a2);
+            }
+        }
+        return $result;
+    }
+    static function products(array ...$array): ?array
+    {
+        $array1 = array_chunk(array_values(array_unique($array[0])), 1);
+        for ($i = 1; $i < count($array); $i++){
+            $array2 = array_values(array_unique($array[$i]));
+            $result = [];
+            foreach ($array1 as $a1){
+                foreach ($array2 as$a2){
+                    $one = $a1;
+                    array_push($one, $a2);
+                    $result[] = $one;
+                }
+            }
+            $array1 = $result;
+
+        }
+        return $array1;
+    }
+
+    static function combinations(array $array) : ?array
+    {
+        $array = array_values(array_unique($array));
+        $n = count($array);
+        $result = [];
+        for ($r = 1; $r <= $n; $r++){
+            $comb = static::combination($array, $r);
+            $result = array_merge($result, $comb);
+        }
+        return $result;
+    }
+
 
     static function transpose($array) {
         return array_map(null, ...$array);
