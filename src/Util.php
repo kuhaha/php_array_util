@@ -59,7 +59,7 @@ class Util {
 
 
     /**
-     * Transform array to a key-value pair:
+     * Transform a row-based array to a key-value pair:
      * associate([['id'=1, 'name'=>'tom', 'age'=>34],...],'id',fn($v)=>$v['name']) 
      * will return [1=>'tom', 2=>'taro',...]
      * 
